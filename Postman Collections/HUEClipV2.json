@@ -5244,13 +5244,11 @@
 	],
 	"variable": [
 		{
-			"id": "380bf68f-1cfa-4e1e-966d-458c9344df23",
 			"key": "bridge",
 			"value": "your-bridge-ip",
 			"description": "Hue Bridge hostname or IP address."
 		},
 		{
-			"id": "79337a8e-0d9a-42b6-9e7b-b79d0be99fb3",
 			"key": "hue_application_key",
 			"value": "your-app-key",
 			"description": "Hue application key for authenticated requests."
