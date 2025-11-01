@@ -20,7 +20,7 @@ allOf:
           color_temperature:
             $ref: '../../common/ColorTemperature.yaml'
           gradient:
-            $ref: '../../common/Gradient.yaml'
+            $ref: '../../common/GradientGet.yaml'
           effects:
             type: object
             description: Basic feature containing effect properties.

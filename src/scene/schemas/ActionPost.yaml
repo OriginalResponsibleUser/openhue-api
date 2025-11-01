@@ -23,7 +23,7 @@ properties:
           mirek:
             $ref: '../../common/Mirek.yaml'
       gradient:
-        $ref: '../../common/Gradient.yaml'
+        $ref: '../../common/GradientPut.yaml'
       effects:
         type: object
         description: Basic feature containing effect properties.

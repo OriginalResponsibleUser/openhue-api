@@ -51,3 +51,15 @@ enum:
   - pendant_spot
   - ceiling_horizontal
   - ceiling_tube
+  - up_and_down
+  - up_and_down_up
+  - up_and_down_down
+  - hue_floodlight_camera
+  - twilight
+  - twilight_front
+  - twilight_back
+  - hue_play_wallwasher
+  - hue_omniglow
+  - hue_neon
+  - string_globe
+  - string_permanent

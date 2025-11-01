@@ -1,0 +1,8 @@
+type: object
+description: Gradient point returned by gradient-capable lights.
+properties:
+  color:
+    $ref: './ColorFeatureBasicGet.yaml'
+required:
+  - color
+

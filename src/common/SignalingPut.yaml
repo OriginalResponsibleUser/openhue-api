@@ -1,0 +1,25 @@
+type: object
+description: Feature containing signaling properties that can be updated on a light.
+properties:
+  signal:
+    type: string
+    description: Signal to set the light to.
+    enum:
+      - no_signal
+      - on_off
+      - on_off_color
+      - alternating
+  duration:
+    type: integer
+    minimum: 0
+    maximum: 65534000
+    description: |
+      Duration in milliseconds. Maximum value is 65534000 ms and the step size is 1 second.
+      Values in between steps will be rounded. Duration is ignored for `no_signal`.
+  colors:
+    type: array
+    minItems: 1
+    maxItems: 2
+    description: List of colors to apply to the signal (not supported by all signals).
+    items:
+      $ref: './ColorFeatureBasicPut.yaml'

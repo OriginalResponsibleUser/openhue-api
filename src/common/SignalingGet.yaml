@@ -1,0 +1,29 @@
+type: object
+description: Feature containing signaling properties reported by the light.
+properties:
+  signal_values:
+    type: array
+    description: Signals that the light supports.
+    items:
+      $ref: './SupportedSignals.yaml'
+  status:
+    type: object
+    description: Indicates status of the active signal. Not available when inactive.
+    properties:
+      signal:
+        type: string
+        enum:
+          - no_signal
+          - on_off
+          - on_off_color
+          - alternating
+      estimated_end:
+        type: string
+        format: date-time
+        description: Timestamp indicating when the active signal is expected to end. Value is omitted if there is no active signal.
+      colors:
+        type: array
+        description: Colors that were provided for the active effect.
+        items:
+          $ref: './ColorFeatureBasicGet.yaml'
+

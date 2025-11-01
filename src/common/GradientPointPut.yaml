@@ -1,0 +1,8 @@
+type: object
+description: Gradient point payload accepted by gradient-capable lights.
+properties:
+  color:
+    $ref: './ColorFeatureBasicPut.yaml'
+required:
+  - color
+

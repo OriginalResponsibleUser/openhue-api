@@ -1,0 +1,23 @@
+type: object
+description: Basic feature containing gradient properties.
+properties:
+  points:
+    type: array
+    description: Collection of gradient points currently applied to the light.
+    items:
+      $ref: './GradientPointGet.yaml'
+    maxItems: 5
+  mode:
+    $ref: './SupportedGradientMode.yaml'
+  points_capable:
+    type: integer
+    description: Number of color points that the gradient device can display.
+  mode_values:
+    type: array
+    description: Modes a gradient device can deploy for the gradient palette of colors.
+    items:
+      $ref: './SupportedGradientMode.yaml'
+  pixel_count:
+    type: integer
+    description: Number of pixels in the device.
+

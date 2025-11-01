@@ -3,12 +3,44 @@ properties:
   type:
     type: string
     description: Type of the supported resources (always `light` here)
+  metadata:
+    type: object
+    description: Additional metadata including a user given name.
+    properties:
+      name:
+        type: string
+        minLength: 1
+        maxLength: 32
+        description: Human readable name of a resource.
+      archetype:
+        $ref: './LightArchetype.yaml'
+      function:
+        type: string
+        enum:
+          - functional
+          - decorative
+          - mixed
+          - unknown
+        description: Function of the light service.
+  identify:
+    type: object
+    description: Triggers a visual identification sequence.
+    properties:
+      action:
+        type: string
+        enum:
+          - identify
+      duration:
+        type: integer
+        description: Duration in milliseconds to perform the identification cycle.
+    required:
+      - action
   on:
     $ref: '../../common/On.yaml'
   dimming:
     $ref: '../../common/Dimming.yaml'
   dimming_delta:
-    $ref: '../../common//DimmingDelta.yaml'
+    $ref: '../../common/DimmingDelta.yaml'
   color_temperature:
     $ref: '../../common/ColorTemperature.yaml'
   color_temperature_delta:
@@ -20,16 +52,43 @@ properties:
   alert:
     $ref: '../../common/Alert.yaml'
   signaling:
-    $ref: '../../common/Signaling.yaml'
+    $ref: '../../common/SignalingPut.yaml'
   mode:
     type: string
     enum:
       - normal
       - streaming
   gradient:
-    $ref: '../../common/Gradient.yaml'
+    $ref: '../../common/GradientPut.yaml'
   effects:
     $ref: './Effects.yaml'
+  effects_v2:
+    type: object
+    description: Preferred way to control light effects.
+    properties:
+      action:
+        type: object
+        properties:
+          effect:
+            $ref: '../../common/SupportedEffects.yaml'
+          parameters:
+            type: object
+            properties:
+              color:
+                $ref: '../../common/ColorFeatureBasicPut.yaml'
+              color_temperature:
+                type: object
+                properties:
+                  mirek:
+                    $ref: '../../common/Mirek.yaml'
+                  mirek_valid:
+                    type: boolean
+              speed:
+                type: number
+                minimum: 0
+                maximum: 1
+        required:
+          - effect
   timed_effects:
     type: object
     description: Basic feature containing timed effect properties.
@@ -38,6 +97,8 @@ properties:
         $ref: './SupportedTimedEffects.yaml'
       duration:
         type: integer
-        description: Duration is mandatory when timed effect is set except for no_effect. Resolution decreases for a larger duration. e.g Effects with duration smaller than a minute will be rounded to a resolution of 1s, while effects with duration larger than an hour will be arounded up to a resolution of 300s. Duration has a max of 21600000 ms.
+        description: |
+          Duration in milliseconds. Duration is mandatory when timed effect is set except for `no_effect`.
+          Resolution decreases for larger durations. Effects shorter than a minute are rounded to one second, while effects longer than an hour are rounded to five minutes. Maximum duration is 21600000 ms.
   powerup:
     $ref: './Powerup.yaml'

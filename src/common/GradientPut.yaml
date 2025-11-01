@@ -1,0 +1,12 @@
+type: object
+description: Basic feature containing gradient properties for write operations.
+properties:
+  points:
+    type: array
+    description: Collection of gradient points. Provide at least two points when setting a gradient.
+    items:
+      $ref: './GradientPointPut.yaml'
+    minItems: 2
+    maxItems: 5
+  mode:
+    $ref: './SupportedGradientMode.yaml'

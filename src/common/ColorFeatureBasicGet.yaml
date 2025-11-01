@@ -1,0 +1,8 @@
+type: object
+description: Basic color representation with xy co-ordinates.
+properties:
+  xy:
+    $ref: './GamutPosition.yaml'
+required:
+  - xy
+

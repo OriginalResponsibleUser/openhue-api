@@ -9,5 +9,5 @@ properties:
   mirek_delta:
     type: integer
     minimum: 0
-    maximum: 347
+    maximum: 950
     description: Mirek delta to current mirek. Clip at mirek_minimum and mirek_maximum of mirek_schema.

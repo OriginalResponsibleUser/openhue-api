@@ -5,18 +5,54 @@ allOf:
     properties:
       metadata:
         type: object
-        description: Deprecated, use metadata on device level
+        description: Additional metadata including a user given name (deprecated, use metadata on device level).
         properties:
           name:
             type: string
+            minLength: 1
+            maxLength: 32
             description: Human readable name of a resource
           archetype:
             $ref: './LightArchetype.yaml'
           fixed_mired:
             type: integer
-            minimum: 153
-            maximum: 500
+            minimum: 50
+            maximum: 1000
             description: A fixed mired value of the white lamp
+          function:
+            type: string
+            enum:
+              - functional
+              - decorative
+              - mixed
+              - unknown
+            description: Function of the light service
+      product_data:
+        type: object
+        description: Factory defaults of the product data.
+        properties:
+          name:
+            type: string
+            minLength: 1
+            maxLength: 32
+            description: Name of the light service, only available for devices with multiple light services.
+          archetype:
+            $ref: './LightArchetype.yaml'
+          function:
+            type: string
+            enum:
+              - functional
+              - decorative
+              - mixed
+              - unknown
+            description: Function of the light service
+      identify:
+        type: object
+        description: Indicates identify capabilities of the light service.
+      service_id:
+        type: integer
+        minimum: 0
+        description: Service identification number. 0 indicates service of a single instance.
       on:
         $ref: '../../common/On.yaml'
       dimming:
@@ -29,14 +65,13 @@ allOf:
             minimum: 0
             maximum: 100
             description: Percentage of the maximum lumen the device outputs on minimum brightness
+      dimming_delta:
+        $ref: '../../common/DimmingDelta.yaml'
       color_temperature:
         type: object
         properties:
           mirek:
-            type: integer
-            minimum: 153
-            maximum: 500
-            description: color temperature in mirek or null when the light color is not in the ct spectrum
+            $ref: '../../common/Mirek.yaml'
           mirek_valid:
             type: boolean
             description: Indication whether the value presented in mirek is valid
@@ -44,15 +79,15 @@ allOf:
             type: object
             properties:
               mirek_minimum:
-                type: integer
-                minimum: 153
-                maximum: 500
-                description: minimum color temperature this light supports
+                allOf:
+                  - $ref: '../../common/Mirek.yaml'
+                  - description: minimum color temperature this light supports
               mirek_maximum:
-                type: integer
-                minimum: 153
-                maximum: 500
-                description: maximum color temperature this light supports
+                allOf:
+                  - $ref: '../../common/Mirek.yaml'
+                  - description: maximum color temperature this light supports
+      color_temperature_delta:
+        $ref: '../../common/ColorTemperatureDelta.yaml'
       color:
         type: object
         properties:
@@ -89,7 +124,7 @@ allOf:
           speed:
             type: number
             minimum: 0
-            maximum: 0
+            maximum: 1
             description: speed of dynamic palette or effect. The speed is valid for the dynamic palette if the status is dynamic_palette or for the corresponding effect listed in status. In case of status none, the speed is not valid
           speed_valid:
             type: boolean
@@ -98,46 +133,17 @@ allOf:
         type: object
         description: TODO # TODO find the AlertEffectType
       signaling:
-        type: object
-        description: Feature containing signaling properties.
-        properties:
-          signal_values:
-            type: array
-            items:
-              $ref: '../../common/SupportedSignals.yaml'
-          estimated_end:
-            type: integer
-            description: Timestamp indicating when the active signal is expected to end. Value is not set if there is no_signal
-          colors:
-            type: array
-            description: Colors that were provided for the active effect.
-            items:
-              $ref: '../../common/Color.yaml'
+        $ref: '../../common/SignalingGet.yaml'
       mode:
         type: string
         enum:
           - normal
           - streaming
       gradient:
-        type: object
-        allOf:
-          - $ref: '../../common/Gradient.yaml'
-          - type: object
-            properties:
-              points_capable:
-                type: integer
-                description: Number of color points that gradient lamp is capable of showing with gradience.
-              mode_values:
-                type: array
-                description: Modes a gradient device can deploy the gradient palette of colors
-                items:
-                  $ref: '../../common/SupportedGradientMode.yaml'
-              pixel_count:
-                type: integer
-                description: Number of pixels in the device
+        $ref: '../../common/GradientGet.yaml'
       effects:
         type: object
-        description: Basic feature containing effect properties.
+        description: 'Deprecated: use effects_v2.'
         properties:
           status:
             $ref: '../../common/SupportedEffects.yaml'
@@ -153,6 +159,47 @@ allOf:
             description: Possible status values in which a light could be when playing an effect.
             items:
               $ref: '../../common/SupportedEffects.yaml'
+      effects_v2:
+        type: object
+        description: Preferred representation for light effects.
+        properties:
+          action:
+            type: object
+            required:
+              - effect_values
+            properties:
+              effect_values:
+                type: array
+                items:
+                  $ref: '../../common/SupportedEffects.yaml'
+          status:
+            type: object
+            required:
+              - effect
+              - effect_values
+            properties:
+              effect:
+                $ref: '../../common/SupportedEffects.yaml'
+              effect_values:
+                type: array
+                items:
+                  $ref: '../../common/SupportedEffects.yaml'
+              parameters:
+                type: object
+                properties:
+                  color:
+                    $ref: '../../common/ColorFeatureBasicGet.yaml'
+                  color_temperature:
+                    type: object
+                    properties:
+                      mirek:
+                        $ref: '../../common/Mirek.yaml'
+                      mirek_valid:
+                        type: boolean
+                  speed:
+                    type: number
+                    minimum: 0
+                    maximum: 1
       timed_effects:
         type: object
         description: Basic feature containing timed effect properties.
@@ -161,7 +208,7 @@ allOf:
             $ref: './SupportedTimedEffects.yaml'
           effect_values:
             type: array
-            description: Possible timed effect values you can set in a light
+            description: Possible timed effect values you can set in a light.
             items:
               $ref: './SupportedTimedEffects.yaml'
           status:
@@ -173,7 +220,7 @@ allOf:
               $ref: './SupportedTimedEffects.yaml'
           duration:
             type: integer
-            description: Duration is mandatory when timed effect is set except for no_effect. Resolution decreases for a larger duration. e.g Effects with duration smaller than a minute will be rounded to a resolution of 1s, while effects with duration larger than an hour will be arounded up to a resolution of 300s. Duration has a max of 21600000 ms.
+            description: Duration in milliseconds. Duration is mandatory when timed effect is set except for `no_effect`. Resolution decreases for a larger duration (e.g. durations shorter than a minute round to one second; durations longer than an hour round to five minutes). Maximum duration is 21600000 ms.
       powerup:
         type: object
         description: Feature containing properties to configure powerup behaviour of a lightsource.

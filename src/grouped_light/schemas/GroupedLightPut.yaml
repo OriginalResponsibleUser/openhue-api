@@ -10,7 +10,7 @@ properties:
   dimming:
     $ref: '../../common/Dimming.yaml'
   dimming_delta:
-    $ref: '../../common//DimmingDelta.yaml'
+    $ref: '../../common/DimmingDelta.yaml'
   color_temperature:
     $ref: '../../common/ColorTemperature.yaml'
   color_temperature_delta:
@@ -20,6 +20,6 @@ properties:
   alert:
     $ref: '../../common/Alert.yaml'
   signaling:
-    $ref: '../../common/Signaling.yaml'
+    $ref: '../../common/SignalingPut.yaml'
   dynamics:
     $ref: '../../common/Dynamics.yaml'

@@ -1,0 +1,8 @@
+type: object
+description: Basic color representation used when writing xy color values.
+properties:
+  xy:
+    $ref: './GamutPosition.yaml'
+required:
+  - xy
+
