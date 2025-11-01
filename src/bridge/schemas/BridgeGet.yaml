@@ -17,5 +17,16 @@ allOf:
           time_zone:
             type: string
             description: Time zone where the user's home is located (as Olson ID).
+      import:
+        type: object
+        description: Information about bridge data imported from another bridge.
+        properties:
+          origin:
+            type: string
+            description: Bridge ID (lower case) where the imported data originates from.
+          time:
+            type: string
+            format: date-time
+            description: UTC date and time when the import took place.
 
 

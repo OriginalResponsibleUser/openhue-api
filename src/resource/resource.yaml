@@ -12,16 +12,14 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              errors:
-                type: array
-                items:
-                  $ref: '../common/error.yaml#/components/schemas/Error'
-              data:
-                type: array
-                items:
-                  $ref: './ResourceGet.yaml'
+            allOf:
+              - $ref: '../common/ApiResponse.yaml'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: './ResourceGet.yaml'
     401:
       $ref: '../common/error.yaml#/components/responses/Unauthorized'
     403:

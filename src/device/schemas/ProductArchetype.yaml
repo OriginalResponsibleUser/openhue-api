@@ -3,6 +3,7 @@ description: The default archetype given by manufacturer. Can be changed by user
 example: hue_go
 enum:
   - bridge_v2
+  - bridge_v3
   - unknown_archetype
   - classic_bulb
   - sultan_bulb
@@ -35,6 +36,7 @@ enum:
   - bollard
   - wall_washer
   - hue_play
+  - hue_chime
   - vintage_bulb
   - vintage_candle_bulb
   - ellipse_bulb
@@ -52,3 +54,15 @@ enum:
   - pendant_spot
   - ceiling_horizontal
   - ceiling_tube
+  - up_and_down
+  - up_and_down_up
+  - up_and_down_down
+  - hue_floodlight_camera
+  - twilight
+  - twilight_front
+  - twilight_back
+  - hue_play_wallwasher
+  - hue_omniglow
+  - hue_neon
+  - string_globe
+  - string_permanent

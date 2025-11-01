@@ -13,8 +13,10 @@ properties:
       - bridge_home
       - room
       - zone
+      - service_group
       - light
       - button
+      - bell_button
       - relative_rotary
       - temperature
       - light_level
@@ -23,12 +25,21 @@ properties:
       - entertainment
       - contact
       - tamper
+      - convenience_area_motion
+      - security_area_motion
+      - speaker
       - grouped_light
+      - grouped_motion
+      - grouped_light_level
       - device_power
+      - device_software_update
       - zigbee_bridge_connectivity
       - zigbee_connectivity
       - zgp_connectivity
       - bridge
+      - motion_area_candidate
+      - motion_area_configuration
+      - wifi_connectivity
       - zigbee_device_discovery
       - homekit
       - matter
@@ -43,3 +54,4 @@ properties:
       - geofence_client
       - geolocation
       - smart_scene
+      - clip

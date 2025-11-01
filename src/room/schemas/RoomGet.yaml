@@ -14,9 +14,13 @@ allOf:
           References all services aggregating control and state of children in the group.
           This includes all services grouped in the group hierarchy given by child relation.
           This includes all services of a device grouped in the group hierarchy given by child relation.
-          Aggregation is per service type, ie every service type which can be grouped has a corresponding definition of
+          Aggregation is per service type, i.e. every service type which can be grouped has a corresponding definition of
           grouped type.
-          Supported types: – grouped_light
+
+          Supported types:
+            - grouped_light
+            - grouped_motion
+            - grouped_light_level
         items:
           $ref: '../../common/ResourceIdentifier.yaml'
       metadata:

@@ -1,0 +1,8 @@
+type: string
+description: Supported switch configuration modes for a device.
+enum:
+  - switch_single_rocker
+  - switch_single_pushbutton
+  - switch_dual_rocker
+  - switch_dual_pushbutton
+

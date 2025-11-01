@@ -20,6 +20,9 @@ allOf:
             description: Human readable name of a resource
           archetype:
             $ref: './ProductArchetype.yaml'
+      identify:
+        type: object
+        description: Indicates that the device supports identification sequences.
       usertest:
         type: object
         properties:
@@ -34,6 +37,23 @@ allOf:
               Activates or extends user usertest mode of device for 120 seconds.
               `false` deactivates usertest mode.
               In usertest mode, devices report changes in state faster and indicate state changes on device LED (if applicable)
+      device_mode:
+        type: object
+        description: Information about the configured mode of the device (for supported switch products).
+        properties:
+          status:
+            type: string
+            enum:
+              - set
+              - changing
+            description: Current state of a mode change request.
+          mode:
+            $ref: './DeviceModeType.yaml'
+          mode_values:
+            type: array
+            description: Modes that the device supports.
+            items:
+              $ref: './DeviceModeType.yaml'
       services:
         type: array
         description: References all services providing control and state of the device.
