@@ -1,0 +1,142 @@
+delete:
+  operationId: deleteEntertainmentConfiguration
+  summary: Delete entertainment configuration
+  description: Delete entertainment configuration
+  tags:
+  - Entertainment Configuration
+  security: &id001
+  - HueApplicationKey: []
+  parameters:
+  - &id002
+    name: entertainmentConfigurationId
+    in: path
+    schema:
+      type: string
+    required: true
+    description: ID of the entertainment configuration
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: ../common/ApiResponse.yaml
+            - type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: ../common/ResourceIdentifier.yaml
+    '401':
+      $ref: ../common/error.yaml#/components/responses/Unauthorized
+    '403':
+      $ref: ../common/error.yaml#/components/responses/Forbidden
+    '404':
+      $ref: ../common/error.yaml#/components/responses/NotFound
+    '405':
+      $ref: ../common/error.yaml#/components/responses/MethodNotAllowed
+    '406':
+      $ref: ../common/error.yaml#/components/responses/NotAcceptable
+    '409':
+      $ref: ../common/error.yaml#/components/responses/Conflict
+    '429':
+      $ref: ../common/error.yaml#/components/responses/TooManyRequests
+    '500':
+      $ref: ../common/error.yaml#/components/responses/InternalServerError
+    '503':
+      $ref: ../common/error.yaml#/components/responses/ServiceUnavailable
+    '507':
+      $ref: ../common/error.yaml#/components/responses/InsufficientStorage
+put:
+  operationId: updateEntertainmentConfiguration
+  summary: Update entertainment configuration
+  description: Update entertainment configuration
+  tags:
+  - Entertainment Configuration
+  security: *id001
+  parameters:
+  - *id002
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: ../common/ApiResponse.yaml
+            - type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: ../common/ResourceIdentifier.yaml
+    '401':
+      $ref: ../common/error.yaml#/components/responses/Unauthorized
+    '403':
+      $ref: ../common/error.yaml#/components/responses/Forbidden
+    '404':
+      $ref: ../common/error.yaml#/components/responses/NotFound
+    '405':
+      $ref: ../common/error.yaml#/components/responses/MethodNotAllowed
+    '406':
+      $ref: ../common/error.yaml#/components/responses/NotAcceptable
+    '409':
+      $ref: ../common/error.yaml#/components/responses/Conflict
+    '429':
+      $ref: ../common/error.yaml#/components/responses/TooManyRequests
+    '500':
+      $ref: ../common/error.yaml#/components/responses/InternalServerError
+    '503':
+      $ref: ../common/error.yaml#/components/responses/ServiceUnavailable
+    '507':
+      $ref: ../common/error.yaml#/components/responses/InsufficientStorage
+get:
+  operationId: getEntertainmentConfiguration
+  summary: Get entertainment configuration
+  description: Get entertainment configuration
+  tags:
+  - Entertainment Configuration
+  security: *id001
+  parameters:
+  - *id002
+  responses:
+    '200':
+      description: Entertainment Configuration Success Response
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: ../common/ApiResponse.yaml
+            - type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: ../common/Resource.yaml
+    '401':
+      $ref: ../common/error.yaml#/components/responses/Unauthorized
+    '403':
+      $ref: ../common/error.yaml#/components/responses/Forbidden
+    '404':
+      $ref: ../common/error.yaml#/components/responses/NotFound
+    '405':
+      $ref: ../common/error.yaml#/components/responses/MethodNotAllowed
+    '406':
+      $ref: ../common/error.yaml#/components/responses/NotAcceptable
+    '409':
+      $ref: ../common/error.yaml#/components/responses/Conflict
+    '429':
+      $ref: ../common/error.yaml#/components/responses/TooManyRequests
+    '500':
+      $ref: ../common/error.yaml#/components/responses/InternalServerError
+    '503':
+      $ref: ../common/error.yaml#/components/responses/ServiceUnavailable
+    '507':
+      $ref: ../common/error.yaml#/components/responses/InsufficientStorage

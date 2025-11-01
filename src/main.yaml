@@ -11,117 +11,301 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: 'https://{bridgeInternalIPAddress}'
-    description: Your Home Bridge
-    variables:
-      bridgeInternalIPAddress:
-        default: 192.168.1.0
-        description: |
-          Use the broker server discover process by visiting https://discovery.meethue.com
-          to discover the IP address of the bridge on your network
+- url: https://{bridge}/clip/v2
+  description: Your Home Bridge
+  variables:
+    bridge:
+      default: 192.168.1.0
+      description: The ip address or hostname of the bridge
 tags:
-  - name: Auth
-    description: Authentication operations.
-  - name: Resource
-    description: API to retrieve all API resources
-  - name: Device
-    description: API to manage devices. Devices have device level properties and offer services such as light. Bridge device cannot be deleted.
-  - name: Device Power
-    description: API to manage device power services. These are offered by battery powered devices. The update endpoint (e.g. `PUT`) was intentionally not implemented.
-  - name: Light
-    description: API to manage light services. These are offered by devices with lighting capabilities.
-  - name: LightLevel
-    description: API to manage light level services. These are offered by devices with light level sensing capabilities.
-  - name: Motion
-    description: API to manage motion services. These are offered by devices with motion sensing capabilities.
-  - name: GroupedLight
-    description: API to manage grouped light services. These are offered by rooms, zones, and homes.
-  - name: Bridge
-    description: API to manage the bridge
-  - name: Bridge Home
-    description: API to manage bridge homes. Homes group rooms as well as devices not assigned to a room.
-  - name: Scene
-    description: API to manage scenes. Scenes are used to store and recall settings for a group of lights.
-  - name: Smart Scene
-    description: API to manage smart scenes
-  - name: Room
-    description: API to manage rooms. Rooms group devices and each device can only be part of one room.
-  - name: Zone
-    description: API to manage zones. Zones group services and each service can be part of multiple zones.
-  - name: Temperature
-    description: API to manage temperature services. These are offered by devices with temperature sensing capabilities.
+- name: Auth
+  description: Authentication operations.
+- name: Resource
+  description: API to retrieve all API resources
+- name: Light
+  description: API to manage light services. These are offered by devices with lighting
+    capabilities.
+- name: Scene
+  description: API to manage scenes. Scenes are used to store and recall settings
+    for a group of lights.
+- name: Room
+  description: API to manage rooms. Rooms group devices and each device can only be
+    part of one room.
+- name: Zone
+  description: API to manage zones. Zones group services and each service can be part
+    of multiple zones.
+- name: Bridge Home
+  description: API to manage bridge homes. Homes group rooms as well as devices not
+    assigned to a room.
+- name: GroupedLight
+  description: API to manage grouped light services. These are offered by rooms, zones,
+    and homes.
+- name: Device
+  description: API to manage devices. Devices have device level properties and offer
+    services such as light. Bridge device cannot be deleted.
+- name: Bridge
+  description: API to manage the bridge
+- name: Device Software Update
+  description: API to manage device update services. These services are present for
+    devices that support software update.
+- name: Device Power
+  description: API to manage device power services. These are offered by battery powered
+    devices.
+- name: Zigbee Connectivity
+  description: API to manage zigbee connectivity services. These are offered by zigbee
+    connected devices.
+- name: ZGP Connectivity
+  description: API to manage zgp connectivity services. These are offered by zigbee
+    green power devices.
+- name: Zigbee Device Discovery
+  description: API to manage zigbee device discovery service. This is offered by the
+    bridge for commissioning.
+- name: Motion
+  description: API to manage motion services. These are offered by devices with motion
+    sensing capabilities.
+- name: Service Group
+  description: API to manage service group services. These are services that aggregate
+    their distinct children into grouped services. For example, adding one or more
+    motion services as children will result in a grouped_motion service that aggregates
+    the motions service report.
+- name: Grouped Motion
+  description: "API to manage grouped motion services. These are offered by service\
+    \ groups with archetype \u201Csensor_group\u201D."
+- name: Grouped Light Level
+  description: "API to manage grouped light-level services. These are offered by service\
+    \ groups with archetype \u201Csensor_group\u201D."
+- name: Camera Motion
+  description: API to manage camera_motion services. These are offered by devices
+    with camera based motion sensing capabilities.
+- name: Temperature
+  description: API to manage temperature services. These are offered by devices with
+    temperature sensing capabilities.
+- name: LightLevel
+  description: API to manage light level services. These are offered by devices with
+    light level sensing capabilities.
+- name: Button
+  description: API to manage button services. These are offered by devices with buttons.
+- name: Bell Button
+  description: API to manage button services. These are offered by devices with buttons.
+- name: Relative Rotary
+  description: API to manage relative rotary services. These are offered by devices
+    with rotary capabilities.
+- name: Behavior Script
+  description: API to discover available scripts that can be instantiated
+- name: Behavior Instance
+  description: API to manage instances of script
+- name: Geofence Client
+  description: API for geofencing functionality
+- name: Geolocation
+  description: API for setting the geolocation
+- name: Entertainment Configuration
+  description: API to manage entertainment configurations, used for Hue Entertainment
+    functionality
+- name: Entertainment
+  description: API to manage entertainment services. These are offered by devices
+    with color lighting capabilities.
+- name: HomeKit
+  description: API to manage homekit service
+- name: Matter
+  description: API to manage matter service
+- name: Matter Fabric
+  description: API to manage matter fabrics
+- name: Smart Scene
+  description: API to manage smart scenes
+- name: Contact
+  description: "API to manage contact sensor state for general purpose cases. These\
+    \ are offered by devices that have a static \u201Cswitch\u201D position. Not necessarily\
+    \ a physical switch."
+- name: Tamper
+  description: API to manage device tamper state. Offered by devices capable of detecting
+    tampering.
+- name: Motion Area Configuration
+  description: API to manage motion area's
+- name: Motion Area Candidate
+  description: API to manage motion area services of lights
+- name: Convenience Area Motion
+  description: API to motion area based motion sensors for convenience use case
+- name: Security Area Motion
+  description: API to motion area based motion sensors for security use case
+- name: Speaker
+  description: API to manage speaker services. These are offered by devices with speakers.
+- name: Clip
+  description: API to reflect public clip services
+- name: WiFi Connectivity
+  description: API to expose wifi_connectivity status
 paths:
-#  Authentication
   /api:
-    $ref: './auth/auth.yaml'
-#  Resources
-  /clip/v2/resource:
-    $ref: './resource/resource.yaml'
-#  Device
-  /clip/v2/resource/device:
-    $ref: './device/device.yaml'
-  /clip/v2/resource/device/{deviceId}:
-    $ref: './device/device_{deviceId}.yaml'
-#  Device Power
-  /clip/v2/resource/device_power:
-    $ref: './device_power/device_power.yaml'
-  /clip/v2/resource/device_power/{deviceId}:
-    $ref: './device_power/device_power_{deviceId}.yaml'
-#  Light
-  /clip/v2/resource/light:
-    $ref: './light/light.yaml'
-  /clip/v2/resource/light/{lightId}:
-    $ref: './light/light_{lightId}.yaml'
-#  Light Level
-  /clip/v2/resource/light_level:
-    $ref: './light_level/light_level.yaml'
-  /clip/v2/resource/light_level/{lightId}:
-    $ref: './light_level/light_level_{lightLevelId}.yaml'
-#  Motion
-  /clip/v2/resource/motion:
-    $ref: './motion/motion.yaml'
-  /clip/v2/resource/motion/{motionId}:
-    $ref: './motion/motion_{motionId}.yaml'
-#  Grouped Level
-  /clip/v2/resource/grouped_light:
-    $ref: './grouped_light/grouped_light.yaml'
-  /clip/v2/resource/grouped_light/{groupedLightId}:
-    $ref: './grouped_light/grouped_light_{groupedLightId}.yaml'
-#  Bridge
-  /clip/v2/resource/bridge:
-    $ref: './bridge/bridge.yaml'
-  /clip/v2/resource/bridge/{bridgeId}:
-    $ref: './bridge/bridge_{bridgeId}.yaml'
-#  Bridge Home
-  /clip/v2/resource/bridge_home:
-    $ref: './bridge_home/bridge_home.yaml'
-  /clip/v2/resource/bridge_home/{bridgeHomeId}:
-    $ref: './bridge_home/bridge_home_{bridgeHomeId}.yaml'
-#  Scene
-  /clip/v2/resource/scene:
-    $ref: './scene/scene.yaml'
-  /clip/v2/resource/scene/{sceneId}:
-    $ref: './scene/scene_{sceneId}.yaml'
-#  Smart Scene
-  /clip/v2/resource/smart_scene:
-    $ref: './smart_scene/smart_scene.yaml'
-  /clip/v2/resource/smart_scene/{sceneId}:
-    $ref: './smart_scene/smart_scene_{sceneId}.yaml'
-#  Room
-  /clip/v2/resource/room:
-    $ref: './room/room.yaml'
-  /clip/v2/resource/room/{roomId}:
-    $ref: './room/room_{roomId}.yaml'
-# Zone
-  /clip/v2/resource/zone:
-    $ref: './zone/zone.yaml'
-  /clip/v2/resource/zone/{zoneId}:
-    $ref: './zone/zone_{zoneId}.yaml'
-# Temperature
-  /clip/v2/resource/temperature:
-    $ref: './temperature/temperature.yaml'
-  /clip/v2/resource/temperature/{temperatureId}:
-    $ref: './temperature/temperature_{temperatureId}.yaml'
+    $ref: ./auth/auth.yaml
+  /resource:
+    $ref: ./resource/resource.yaml
+  /resource/light:
+    $ref: ./light/light.yaml
+  /resource/light/{lightId}:
+    $ref: ./light/light_{lightId}.yaml
+  /resource/scene:
+    $ref: ./scene/scene.yaml
+  /resource/scene/{sceneId}:
+    $ref: ./scene/scene_{sceneId}.yaml
+  /resource/room:
+    $ref: ./room/room.yaml
+  /resource/room/{roomId}:
+    $ref: ./room/room_{roomId}.yaml
+  /resource/zone:
+    $ref: ./zone/zone.yaml
+  /resource/zone/{zoneId}:
+    $ref: ./zone/zone_{zoneId}.yaml
+  /resource/bridge_home:
+    $ref: ./bridge_home/bridge_home.yaml
+  /resource/bridge_home/{bridgeHomeId}:
+    $ref: ./bridge_home/bridge_home_{bridgeHomeId}.yaml
+  /resource/grouped_light:
+    $ref: ./grouped_light/grouped_light.yaml
+  /resource/grouped_light/{groupedLightId}:
+    $ref: ./grouped_light/grouped_light_{groupedLightId}.yaml
+  /resource/device:
+    $ref: ./device/device.yaml
+  /resource/device/{deviceId}:
+    $ref: ./device/device_{deviceId}.yaml
+  /resource/bridge:
+    $ref: ./bridge/bridge.yaml
+  /resource/bridge/{bridgeId}:
+    $ref: ./bridge/bridge_{bridgeId}.yaml
+  /resource/device_software_update:
+    $ref: ./device_software_update/device_software_update.yaml
+  /resource/device_software_update/{deviceSoftwareUpdateId}:
+    $ref: ./device_software_update/device_software_update_deviceSoftwareUpdateId.yaml
+  /resource/device_power:
+    $ref: ./device_power/device_power.yaml
+  /resource/device_power/{deviceId}:
+    $ref: ./device_power/device_power_{deviceId}.yaml
+  /resource/zigbee_connectivity:
+    $ref: ./zigbee_connectivity/zigbee_connectivity.yaml
+  /resource/zigbee_connectivity/{zigbeeConnectivityId}:
+    $ref: ./zigbee_connectivity/zigbee_connectivity_zigbeeConnectivityId.yaml
+  /resource/zgp_connectivity:
+    $ref: ./zgp_connectivity/zgp_connectivity.yaml
+  /resource/zgp_connectivity/{zgpConnectivityId}:
+    $ref: ./zgp_connectivity/zgp_connectivity_zgpConnectivityId.yaml
+  /resource/zigbee_device_discovery:
+    $ref: ./zigbee_device_discovery/zigbee_device_discovery.yaml
+  /resource/zigbee_device_discovery/{zigbeeDeviceDiscoveryId}:
+    $ref: ./zigbee_device_discovery/zigbee_device_discovery_zigbeeDeviceDiscoveryId.yaml
+  /resource/motion:
+    $ref: ./motion/motion.yaml
+  /resource/motion/{motionId}:
+    $ref: ./motion/motion_{motionId}.yaml
+  /resource/service_group:
+    $ref: ./service_group/service_group.yaml
+  /resource/service_group/{serviceGroupId}:
+    $ref: ./service_group/service_group_serviceGroupId.yaml
+  /resource/grouped_motion:
+    $ref: ./grouped_motion/grouped_motion.yaml
+  /resource/grouped_motion/{groupedMotionId}:
+    $ref: ./grouped_motion/grouped_motion_groupedMotionId.yaml
+  /resource/grouped_light_level:
+    $ref: ./grouped_light_level/grouped_light_level.yaml
+  /resource/grouped_light_level/{groupedLightLevelId}:
+    $ref: ./grouped_light_level/grouped_light_level_groupedLightLevelId.yaml
+  /resource/camera_motion:
+    $ref: ./camera_motion/camera_motion.yaml
+  /resource/camera_motion/{cameraMotionId}:
+    $ref: ./camera_motion/camera_motion_cameraMotionId.yaml
+  /resource/temperature:
+    $ref: ./temperature/temperature.yaml
+  /resource/temperature/{temperatureId}:
+    $ref: ./temperature/temperature_{temperatureId}.yaml
+  /resource/light_level:
+    $ref: ./light_level/light_level.yaml
+  /resource/light_level/{lightLevelId}:
+    $ref: ./light_level/light_level_{lightLevelId}.yaml
+  /resource/button:
+    $ref: ./button/button.yaml
+  /resource/button/{buttonId}:
+    $ref: ./button/button_buttonId.yaml
+  /resource/bell_button:
+    $ref: ./bell_button/bell_button.yaml
+  /resource/bell_button/{bellButtonId}:
+    $ref: ./bell_button/bell_button_bellButtonId.yaml
+  /resource/relative_rotary:
+    $ref: ./relative_rotary/relative_rotary.yaml
+  /resource/relative_rotary/{relativeRotaryId}:
+    $ref: ./relative_rotary/relative_rotary_relativeRotaryId.yaml
+  /resource/behavior_script:
+    $ref: ./behavior_script/behavior_script.yaml
+  /resource/behavior_script/{behaviorScriptId}:
+    $ref: ./behavior_script/behavior_script_behaviorScriptId.yaml
+  /resource/behavior_instance:
+    $ref: ./behavior_instance/behavior_instance.yaml
+  /resource/behavior_instance/{behaviorInstanceId}:
+    $ref: ./behavior_instance/behavior_instance_behaviorInstanceId.yaml
+  /resource/geofence_client:
+    $ref: ./geofence_client/geofence_client.yaml
+  /resource/geofence_client/{geofenceClientId}:
+    $ref: ./geofence_client/geofence_client_geofenceClientId.yaml
+  /resource/geolocation:
+    $ref: ./geolocation/geolocation.yaml
+  /resource/geolocation/{geolocationId}:
+    $ref: ./geolocation/geolocation_geolocationId.yaml
+  /resource/entertainment_configuration:
+    $ref: ./entertainment_configuration/entertainment_configuration.yaml
+  /resource/entertainment_configuration/{entertainmentConfigurationId}:
+    $ref: ./entertainment_configuration/entertainment_configuration_entertainmentConfigurationId.yaml
+  /resource/entertainment:
+    $ref: ./entertainment/entertainment.yaml
+  /resource/entertainment/{entertainmentId}:
+    $ref: ./entertainment/entertainment_entertainmentId.yaml
+  /resource/homekit:
+    $ref: ./homekit/homekit.yaml
+  /resource/homekit/{homeKitId}:
+    $ref: ./homekit/homekit_homeKitId.yaml
+  /resource/matter:
+    $ref: ./matter/matter.yaml
+  /resource/matter/{matterId}:
+    $ref: ./matter/matter_matterId.yaml
+  /resource/matter_fabric:
+    $ref: ./matter_fabric/matter_fabric.yaml
+  /resource/matter_fabric/{matterFabricId}:
+    $ref: ./matter_fabric/matter_fabric_matterFabricId.yaml
+  /resource/smart_scene:
+    $ref: ./smart_scene/smart_scene.yaml
+  /resource/smart_scene/{sceneId}:
+    $ref: ./smart_scene/smart_scene_{sceneId}.yaml
+  /resource/contact:
+    $ref: ./contact/contact.yaml
+  /resource/contact/{contactId}:
+    $ref: ./contact/contact_contactId.yaml
+  /resource/tamper:
+    $ref: ./tamper/tamper.yaml
+  /resource/tamper/{tamperId}:
+    $ref: ./tamper/tamper_tamperId.yaml
+  /resource/motion_area_configuration:
+    $ref: ./motion_area_configuration/motion_area_configuration.yaml
+  /resource/motion_area_configuration/{motionAreaConfigurationId}:
+    $ref: ./motion_area_configuration/motion_area_configuration_motionAreaConfigurationId.yaml
+  /resource/motion_area_candidate:
+    $ref: ./motion_area_candidate/motion_area_candidate.yaml
+  /resource/motion_area_candidate/{motionAreaCandidateId}:
+    $ref: ./motion_area_candidate/motion_area_candidate_motionAreaCandidateId.yaml
+  /resource/convenience_area_motion:
+    $ref: ./convenience_area_motion/convenience_area_motion.yaml
+  /resource/convenience_area_motion/{convenienceAreaMotionId}:
+    $ref: ./convenience_area_motion/convenience_area_motion_convenienceAreaMotionId.yaml
+  /resource/security_area_motion:
+    $ref: ./security_area_motion/security_area_motion.yaml
+  /resource/security_area_motion/{securityAreaMotionId}:
+    $ref: ./security_area_motion/security_area_motion_securityAreaMotionId.yaml
+  /resource/speaker:
+    $ref: ./speaker/speaker.yaml
+  /resource/speaker/{speakerId}:
+    $ref: ./speaker/speaker_speakerId.yaml
+  /resource/clip:
+    $ref: ./clip/clip.yaml
+  /resource/clip/{clipId}:
+    $ref: ./clip/clip_clipId.yaml
+  /resource/wifi_connectivity:
+    $ref: ./wifi_connectivity/wifi_connectivity.yaml
+  /resource/wifi_connectivity/{wifiConnectivityId}:
+    $ref: ./wifi_connectivity/wifi_connectivity_wifiConnectivityId.yaml
 components:
   securitySchemes:
     HueApplicationKey:
